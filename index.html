@@ -2,31 +2,45 @@
 <html lang="en-us">
 
 <head>
-  <meta charset="UTF-8">
-  <title>Guess a Word Game</title>
-  <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css" />
+    <meta charset="UTF-8">
+    <title>Guess a Word Game</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css" />
 </head>
 
 <body>
-  <h1>Guess Some 80's Bands I like</h1>
-  <h2 id="mainTitle">Press spacebar to start</h2>
-  <h2 id="currentGuess"></h2>
-  <span>Incorrect Guesses Remaining: </span><span id="incorrectGuessesLeft"></span>
-  <br>
-  <span>All Letters Guessed: </span><span id="lettersGuessed"></span>
-  <br>
-  <span>Incorrect Letters Guessed: </span><span id="lettersIncorrectlyGuessed"></span>
-  <br>
-  <span>Correct Letters Guessed: </span><span id="lettersCorrectlyGuessed"></span>
-  <br>
-  <strong><div id="gameMessage">Press Spacebar to start</div></strong>
-  <br>
-  <strong><div id="nbrWins">Number of Wins: 0</div></strong>
-  <br>
-  <audio src="assets/sounds/Pacman_Introduction_Music-KP.mp3"></audio>
-  
-  <script type="text/javascript" src="assets/js/WordGuess.js"></script>
-  <script type="text/javascript" src="assets/js/main.js"></script>
+    <header>
+        <h1>New Wave 80's Bands I like</h1>
+    </header>
+    <section class="container">
+        <div class="gameHeader">
+            <h2 id="mainTitle">Press spacebar to start</h2>
+            <h2 id="currentGuess"></h2>
+        </div>
+        <section class="gameProgress">
+            <aside class="gameStatus">
+                <div>
+                    <div id="gameMessage">Press Spacebar to start</div>
+                    <br>
+                    <div>Incorrect Guesses Remaining: <span id="incorrectGuessesLeft"></span></div>
+                    <div>All Letters Guessed: <span id="lettersGuessed"></span></div>
+                    <div>Incorrect Letters Guessed: <span id="lettersIncorrectlyGuessed"></span></div>
+                    <div>Correct Letters Guessed: </span><span id="lettersCorrectlyGuessed"></div>
+                </div>
+                <div id="victories">
+                    <p>Number of Wins: <span id="nbrWins">0</span></p>
+                </div>
+            </aside>
+            <aside class="gameResults">
+                <div>
+                    <p id="correctAnswer">80s Album Cover</p>
+                    <img class="albumCover" src="assets/images/300x300NewWave80s.jpg" width="300px" , height="300px">
+                </div>
+            </aside>
+        </section>
+    </section>
+
+    <script type="text/javascript" src="assets/js/WordGuess.js"></script>
+    <script type="text/javascript" src="assets/js/main.js"></script>
 
 </body>
 
