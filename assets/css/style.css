@@ -47,21 +47,46 @@ header {
 .gameProgress {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin: 0;
-    background-color: white;
+    justify-items: center;
+    border: 1px solid gray;
+    padding: 0;
 }
 
-.gameStatus {
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    text-align: left;
-    padding: 5px;
-    flex-basis: 0;
-    flex-grow: 1;
+section,
+aside {
+    display: block;
+    position: relative;
+    height: auto;
+    text-align: center;
+    border: 1px solid #ebebeb;
+    background-color: #ebebeb;
+    color: #777;
+    width: 50%;
+    margin: 1% 1% 1% 1%;
+}
 
+article {
+    border: 1px solid gray;
+    margin: 5px;
+    padding: 4px;
+    text-align: left;
+    display: block;
+    background-color: gray;
+    color: white;
+}
+
+#gameMessage {
+    text-align: center;
+    font-style: italic;
+}
+
+#gameInfo {
+    border: 1px solid gray;
+    padding: 10px;
+    line-height: 1.7em;
+    background: white;
+    color: black;
+    margin: 2%;
 }
 
 #lettersGuessed {
@@ -69,38 +94,22 @@ header {
     text-transform: uppercase;
 }
 
-#gameMessage {
-    text-align: center;
-    font-style: italic;
-}
 #victories {
     align-self: center;
     text-align: center;
     font-weight: bold;
 }
 
-.gameResults {
-    align-self: center;
-    margin: 0;
-    border: 1px solid #777777;
-    text-align: left;
-    padding: 5px;
-    flex-basis: 0;
-    flex-grow: 1;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    align-content: center;
-
-}
-
-#correctAnswer {
+.sectionTitle {
     text-align: center;
-    letter-spacing: 1em;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    padding: 0.5em;
 }
+
 .albumCover {
+    position: relative;
+    padding: 2px;
     width: 100%;
     height: auto;
 }
@@ -108,17 +117,14 @@ header {
 @media screen and (max-width: 640px) {
     .gameProgress {
         flex-flow: column;
+        padding: 2%;
     }
-    .gameStatus {
-        display: inline-block;
-        position: relative;
-    }
-    
-    .gameResults {
-        display: inline-block;
-        position: relative;
+
+    section,
+    aside {
         width: 100%;
-        height: auto;    
+        margin: 1% 0 1% 0;
     }
-    
+
+
 }

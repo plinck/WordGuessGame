@@ -61,11 +61,11 @@ document.addEventListener('keyup', function (event) {
 function endGame(winner) {
     // Winner or loser messages and audio
     if (winner) {
-        str = "You WON! Word is: " + wordGuess.wordToGuess + " - Press Spacebar to restart";
+        str = "You WON! Word is: " + wordGuess.wordToGuess ;
         document.getElementById("correctAnswer").innerHTML = wordGuess.wordToGuess;    
         audioWinner.play();
     } else {
-        str = "Game Over, word is: " + wordGuess.wordToGuess + " - you lost, Press Spacebar to restart";
+        str = "You Lost, word is: " + wordGuess.wordToGuess;
         document.getElementById("correctAnswer").innerHTML = "80s Album Cover";    
         audioLoser.play();
     }
@@ -81,7 +81,7 @@ function displayGameStatus() {
     document.getElementById("lettersIncorrectlyGuessed").innerHTML = wordGuess.lettersIncorrectlyGuessed;
     if (wordGuess.gameInProgress) {
         document.getElementById("gameMessage").innerHTML = "playing ...";
-        document.getElementById("mainTitle").innerHTML = "Press letter or number key to guess";
+        document.getElementById("mainTitle").innerHTML = "Press letter or number key to guess band name";
     } else {
         document.getElementById("mainTitle").innerHTML = "Press spacebar to start";
     }
