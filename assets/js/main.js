@@ -63,6 +63,7 @@ function endGame(winner) {
     if (winner) {
         str = "You WON! Word is: " + wordGuess.wordToGuess ;
         document.getElementById("correctAnswer").innerHTML = wordGuess.wordToGuess;    
+        document.getElementById("albumCover").src = wordGuess.wordImage;
         audioWinner.play();
     } else {
         str = "You Lost, word is: " + wordGuess.wordToGuess;

@@ -107,7 +107,7 @@ article {
     padding: 0.5em;
 }
 
-.albumCover {
+#albumCover {
     position: relative;
     padding: 2px;
     width: 100%;

@@ -11,6 +11,7 @@ class WordGuess {
         this.nbrWins = 0;
         this.nextWordIndex = 0;
         this.createWordArray();
+        this.createImageArray();
         this.gameInProgress = false; // true if playing game, false if ended
 
         // These initialize and get reset each try
@@ -21,6 +22,7 @@ class WordGuess {
     reset(guesses) {
         this.gameInProgress = true; // true if playing game, false if ended
         this.wordToGuess = this.wordArray[this.nextWordIndex];
+        this.wordImage = this.imageArray[this.nextWordIndex];
         this.currentGuess = "";
         this.lettersGuessed = "";
         this.incorrectGuessesLeft = guesses;
@@ -59,8 +61,31 @@ class WordGuess {
     createWordArray() {
         this.wordArray = ["DuranDuran", "TheCure", "INXS", "Queen", "Devo", "Yaz", "TheSmiths",
             "NewOrder", "REM", "TheHumanLeague", "DepecheMode", "TearsForFears",
-            "TheCure", "TheCars", "REM", "TalkingHeads", "TheClash", "PeterGabriel",
-            "NewOrder", "TheB52s"
+            "TheCure", "TheCars", "TalkingHeads", "TheClash", "PeterGabriel",
+            "TheB52s"
+        ];
+    }
+
+    createImageArray() {
+        this.imageArray = [
+        "./assets/images/new-wave-bands-duran-duran.jpg",
+        "./assets/images/new-wave-bands-the-cure.jpg",
+        "./assets/images/new-wave-bands-inxs.jpg",
+        "./assets/images/300x300NewWave80s.jpg",
+        "./assets/images/new-wave-bands-devo.jpg",
+        "./assets/images/new-wave-bands-yaz.jpg",
+        "./assets/images/new-wave-bands-the-smiths.jpg",
+        "./assets/images/new-wave-bands-new-order.jpg",
+        "./assets/images/new-wave-bands-rem.jpg",
+        "./assets/images/new-wave-bands-human-league.jpg",
+        "./assets/images/new-wave-bands-depeche-mode.jpg",
+        "./assets/images/new-wave-bands-tears-for-fears.jpg",
+        "./assets/images/new-wave-bands-the-cure.jpg",
+        "./assets/images/300x300NewWave80s.jpg",
+        "./assets/images/300x300NewWave80s.jpg",
+        "./assets/images/300x300NewWave80s.jpg",
+        "./assets/images/300x300NewWave80s.jpg",
+        "./assets/images/300x300NewWave80s.jpg"
         ];
     }
 
