@@ -1,57 +1,37 @@
 /* **********************************************************************************
- * Class: WordGuess
+ * Class: WordGuessGame
  * Contains all the functionality to do a hangman-type game
  * Note the use of Capitalizing first letter of each word in a class name
  * in a standard practice in most OO languages like C#, C++, Swift,
  * Java, objective-C etc.
  ********************************************************************************** */
-class WordGuess {
-    constructor(guesses) {
+/*
+ * The arrays below are "static" members of this class, but there is no built-in way
+ * to define static properties in Javascript.  The way to get the desired behavior - i.e.
+ * these arrays are the same for all instances the objects -- aka class level -- is to 
+ * deifine them outside the class and refer to tem with static methods in the class
+ */
+let _wordArray = [];
+let _imageArray = [];
+
+class WordGuessGame {
+    // Give default number of missed guesses to 5
+    constructor(guesses = 5) {
         //These are for the overall game no matter how many times you play
         this.nbrWins = 0;
         this.nextWordIndex = 0;
         this.createWordArray();
         this.createImageArray();
         this.gameInProgress = false; // true if playing game, false if ended
-
-        // These initialize and get reset each try
-
     }
 
-    // These change every time the game restarts
-    reset(guesses) {
-        this.gameInProgress = true; // true if playing game, false if ended
-        this.wordToGuess = this.wordArray[this.nextWordIndex];
-        this.wordImage = this.imageArray[this.nextWordIndex];
-        this.currentGuess = "";
-        this.lettersGuessed = "";
-        this.incorrectGuessesLeft = guesses;
-        this.lettersCorrectlyGuessed = "";
-        this.nbrLettersGuessedCorrect = 0;
-        this.lettersIncorrectlyGuessed = "";
-        this.nbrLettersGuessedIncorrect = 0;
-        this.guessedCorrectly = false;
-
-        this.makeBlankGuess(this.wordToGuess);
-
-        // Get next word - for now just increment, eventually use random
-        // if it gets to last one, wrap around
-        this.nextWordIndex += 1;
-        if (this.nextWordIndex >= (this.wordArray.length - 1)) {
-            this.nextWordIndex = 0;
-        }
-
+    // *static* properties
+    // This allows access to the *static* property arrays so one for ALL instances
+    static get wordArray() {
+        return _wordArray;
     }
-
-    // Make the blank layout of the word
-    //
-    makeBlankGuess(word) {
-        var text = "";
-        for (var member in word) {
-            // text += "list[member]";
-            text += "_";
-        }
-        this.currentGuess = text;
+    static get imageArray() {
+        return _imageArray;
     }
 
     // Creates an array of word choices
@@ -68,25 +48,58 @@ class WordGuess {
 
     createImageArray() {
         this.imageArray = [
-        "./assets/images/new-wave-bands-duran-duran.jpg",
-        "./assets/images/new-wave-bands-the-cure.jpg",
-        "./assets/images/new-wave-bands-inxs.jpg",
-        "./assets/images/300x300NewWave80s.jpg",
-        "./assets/images/new-wave-bands-devo.jpg",
-        "./assets/images/new-wave-bands-yaz.jpg",
-        "./assets/images/new-wave-bands-the-smiths.jpg",
-        "./assets/images/new-wave-bands-new-order.jpg",
-        "./assets/images/new-wave-bands-rem.jpg",
-        "./assets/images/new-wave-bands-human-league.jpg",
-        "./assets/images/new-wave-bands-depeche-mode.jpg",
-        "./assets/images/new-wave-bands-tears-for-fears.jpg",
-        "./assets/images/new-wave-bands-the-cure.jpg",
-        "./assets/images/300x300NewWave80s.jpg",
-        "./assets/images/300x300NewWave80s.jpg",
-        "./assets/images/300x300NewWave80s.jpg",
-        "./assets/images/300x300NewWave80s.jpg",
-        "./assets/images/300x300NewWave80s.jpg"
+            "./assets/images/new-wave-bands-duran-duran.jpg",
+            "./assets/images/new-wave-bands-the-cure.jpg",
+            "./assets/images/new-wave-bands-inxs.jpg",
+            "./assets/images/300x300NewWave80s.jpg",
+            "./assets/images/new-wave-bands-devo.jpg",
+            "./assets/images/new-wave-bands-yaz.jpg",
+            "./assets/images/new-wave-bands-the-smiths.jpg",
+            "./assets/images/new-wave-bands-new-order.jpg",
+            "./assets/images/new-wave-bands-rem.jpg",
+            "./assets/images/new-wave-bands-human-league.jpg",
+            "./assets/images/new-wave-bands-depeche-mode.jpg",
+            "./assets/images/new-wave-bands-tears-for-fears.jpg",
+            "./assets/images/new-wave-bands-the-cure.jpg",
+            "./assets/images/300x300NewWave80s.jpg",
+            "./assets/images/300x300NewWave80s.jpg",
+            "./assets/images/300x300NewWave80s.jpg",
+            "./assets/images/300x300NewWave80s.jpg",
+            "./assets/images/300x300NewWave80s.jpg"
         ];
+    }
+
+    // These change every time the game restarts - the is really a word object
+    // during rafctoring, I will use this method to create a new instance of word
+    // which will be the actaul guess for just one word
+    reset(guesses) {
+        this.gameInProgress = true; // true if playing game, false if ended
+
+        // get a random word from the database/array of words
+        this.nextWordIndex = Math.floor(Math.random() * this.wordArray.length);
+
+        this.wordToGuess = this.wordArray[this.nextWordIndex];
+        this.wordImage = this.imageArray[this.nextWordIndex];
+        this.currentGuess = "";
+        this.lettersGuessed = "";
+        this.incorrectGuessesLeft = guesses;
+        this.lettersCorrectlyGuessed = "";
+        this.nbrLettersGuessedCorrect = 0;
+        this.lettersIncorrectlyGuessed = "";
+        this.nbrLettersGuessedIncorrect = 0;
+        this.guessedCorrectly = false;
+
+        this.makeBlankGuess(this.wordToGuess);
+    }
+
+    // Make the blank layout of the word
+    makeBlankGuess(word) {
+        var text = "";
+        for (var member in word) {
+            // text += "list[member]";
+            text += "_";
+        }
+        this.currentGuess = text;
     }
 
     // put the letter in the correct spot
@@ -159,8 +172,16 @@ class WordGuess {
 
     // Print self/this
     print() {
+        // WordGuessGame properties
         document.write("wins:" + this.nbrWins + "<br>");
+        document.write("nextWordIndex" + this.nextWordIndex + "<br>");
+        // wordArray();
+        // imageArray();
+
+        // "word" properties - i.e. properties for one word guess - refactor to object
+        document.write("gameInProgress:'" + this.gameInProgress + "'" + "<br>");
         document.write("wordToGuess:'" + this.wordToGuess + "'" + "<br>");
+        document.write("wordImage:'" + this.wordImage + "'" + "<br>");
         document.write("currentGuess:'" + this.currentGuess + "'" + "<br>");
         document.write("lettersGuessed:'" + this.lettersGuessed + "'" + "<br>");
         document.write("incorrectGuessesLeft:" + this.incorrectGuessesLeft + "<br>");
@@ -168,12 +189,21 @@ class WordGuess {
         document.write("nbrLettersGuessedCorrect:" + this.nbrLettersGuessedCorrect + "<br>");
         document.write("lettersIncorrectlyGuessed:'" + this.lettersIncorrectlyGuessed + "'" + "<br>");
         document.write("nbrLettersGuessedIncorrect:" + this.nbrLettersGuessedIncorrect + "<br>");
+        document.write("guessedCorrectly:" + this.guessedCorrectly + "<br>");
     }
 
     // Log self/this
     log() {
+        // WordGuessGame properties
         console.log("wins:" + this.nbrWins);
+        console.log("nextWordIndex: '" + this.nextWordIndex + "'");
+        // wordArray();
+        // imageArray();
+
+        // "word" properties - i.e. properties for one word guess - refactor to object
+        console.log("gameInProgress:'" + this.gameInProgress + "'");
         console.log("wordToGuess:'" + this.wordToGuess + "'");
+        console.log("wordImage:'" + this.wordImage + "'");
         console.log("currentGuess:'" + this.currentGuess + "'");
         console.log("lettersGuessed:'" + this.lettersGuessed + "'");
         console.log("incorrectGuessesLeft:" + this.incorrectGuessesLeft);
@@ -181,5 +211,6 @@ class WordGuess {
         console.log("nbrLettersGuessedCorrect:" + this.nbrLettersGuessedCorrect);
         console.log("lettersIncorrectlyGuessed:'" + this.lettersIncorrectlyGuessed + "'");
         console.log("nbrLettersGuessedIncorrect:" + this.nbrLettersGuessedIncorrect);
+        console.log("guessedCorrectly:'" + this.guessedCorrectly + "'");
     }
 }
