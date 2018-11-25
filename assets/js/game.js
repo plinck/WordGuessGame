@@ -1,5 +1,5 @@
 /* **********************************************************************************
- * Main Program
+ * Main Program - game
  * main is the "view controller" that interacts with web page which is the view
  * WordGuessGame stores the game info, words, and progress (the "model") and contains the logic
  * to run the game - like amn app controller.
