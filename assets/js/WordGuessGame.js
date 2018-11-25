@@ -51,7 +51,7 @@ class WordGuessGame {
             "./assets/images/new-wave-bands-duran-duran.jpg",
             "./assets/images/new-wave-bands-the-cure.jpg",
             "./assets/images/new-wave-bands-inxs.jpg",
-            "./assets/images/300x300NewWave80s.jpg",
+            "./assets/images/3275x200WordGuessGame.png.jpg",
             "./assets/images/new-wave-bands-devo.jpg",
             "./assets/images/new-wave-bands-yaz.jpg",
             "./assets/images/new-wave-bands-the-smiths.jpg",
@@ -61,11 +61,11 @@ class WordGuessGame {
             "./assets/images/new-wave-bands-depeche-mode.jpg",
             "./assets/images/new-wave-bands-tears-for-fears.jpg",
             "./assets/images/new-wave-bands-the-cure.jpg",
-            "./assets/images/300x300NewWave80s.jpg",
-            "./assets/images/300x300NewWave80s.jpg",
-            "./assets/images/300x300NewWave80s.jpg",
-            "./assets/images/300x300NewWave80s.jpg",
-            "./assets/images/300x300NewWave80s.jpg"
+            "./assets/images/275x200WordGuessGame.png",
+            "./assets/images/275x200WordGuessGame.png",
+            "./assets/images/275x200WordGuessGame.png",
+            "./assets/images/275x200WordGuessGame.png",
+            "./assets/images/275x200WordGuessGame.png"
         ];
     }
 
