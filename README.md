@@ -13,6 +13,12 @@ I have some sound in it for now, but audio automatically palying on webpages is 
 
 This app runs in the browser, and feature dynamically updated HTML and CSS powered by your JavaScript code.
 
+### Added to my responsive portffolio and my bootstrap portfolio sites 
+
+I added a portfolio item to both my responsive and bootstrap portfolio.  So, both of those have a portfolio item that links to this game.  Just click on the image to open up the game.
+
+- - -
+
 ### Create a README.md
 
 Add a `README.md` to your repository describing the project. Here are some resources for creating your `README.md`. Here are some resources to help you along the way:
@@ -22,15 +28,3 @@ Add a `README.md` to your repository describing the project. Here are some resou
 * [Mastering Markdown](https://guides.github.com/features/mastering-markdown/)
 
 - - -
-
-### Add To Your Portfolio
-
-After completing the homework please add the piece to your portfolio. Make sure to add a link to your updated portfolio in the comments section of your homework so the TAs can easily ensure you completed this step when they are grading the assignment. To receive an 'A' on any assignment, you must link to it from your portfolio.
-
-- - -
-
-### One More Thing
-
-If you have any questions about this project or the material we have covered, please post them in the community channels in slack so that your fellow developers can help you! If you're still having trouble, you can come to office hours for assistance from your instructor and TAs.
-
-**Good Luck!**
