@@ -5,6 +5,7 @@
 #### Guess the name of an 80s New Wave band that I liked
 
 To use, you first go to the website hosting this game:
+
 * [Word Guess Game](https://plinck.github.io/WordGuessGame/)
 
 Then, you press the `spacebar` key to start the game.
@@ -14,6 +15,12 @@ During game play, you just guess letters or numbers to guess the name of the ban
 The game ends when you run out of __incorrect__ guesses or you guess the band name correctly.  Each time you get it correctly, I give you a win and tally the number of wins to show you.  After a single word guess is completed, you must hit the `spacebar` key again to start a new guess.
 
 - - -
+  
+##### 3 Javascript files make up this assigment:
+
+1. game.js - main program that listens for key events uses WordGuessGame to do the work
+2. WordGuessGame.js - the game and view controller that runs many guess and formats HTML dynamically
+3. Word.js - the guts of guess one single word
 
 In this assignment, I created a Word Guess game that is like hangman.  The theme is new wave bands I liked from the 80's.  I created a class "WordGuessGame" that is like the view controller and has all logic for the overall game - wins, all words/images, progress and interacting with html to display.  The word object has all the guts of guessing a single word.  The main class WordGuessGame uses word to handle the workload of
 making guesses for that one word.  It creates a new word object for each word to guess in the game.
@@ -29,6 +36,7 @@ This app runs in the browser, and feature dynamically updated HTML and CSS power
 ### I linked from my responsive portffolio and my bootstrap portfolio sites
 
 I added a portfolio item to both my responsive and bootstrap portfolio.  Both of those have a portfolio item that links to this game.  Just click on the image to open up the game.  You can link to either of them by clikcing the links below:
+
 * [Responsvive Portfolio](https://plinck.github.io/Responsive-Portfolio/portfolio.html)
 * [Bootstrap Portfolio](https://plinck.github.io/Bootstrap-Portfolio/portfolio.html)
 
