@@ -1,5 +1,8 @@
 /*
  * Class: Word
+ * This class has all logic for a single word guess.  The game uses
+ * this to guess a single word.  It creates a new object of this class
+ * for every word they wish to guess
  */
 class Word {
     constructor(word, image, guesses = 5) {
@@ -114,6 +117,12 @@ class WordGuessGame {
         this.nextWordIndex = 0;
         this.createWordArray();
         this.createImageArray();
+
+        // Audio for game
+        this.audioStart = new Audio("./assets/sounds/Pacman_Introduction_Music-KP.mp3"); // Audio to start the game
+        this.audioWinner = new Audio("./assets/sounds/Strong_Punch-Mike_Koenig.mp3"); // Audio if you got it correct
+        this.audioLoser = new Audio("./assets/sounds/Buzzer-SoundBible.com.mp3"); // Audio if you got it wrong
+
         this.gameInProgress = false; // true if playing game, false if ended
     }
 
@@ -173,7 +182,7 @@ class WordGuessGame {
         this.word = new Word(this.wordArray[this.nextWordIndex], this.imageArray[this.nextWordIndex], guesses);
 
         this.displayGameStatus();
-
+        this.audioStart.play();
     }
 
     makeAGuess(letter) {
@@ -217,10 +226,10 @@ class WordGuessGame {
         // Winner or loser messages and audio
         if (winner) {
             str = "You WON! Word is: " + this.word.wordToGuess;
-            audioWinner.play();
+            this.audioWinner.play();
         } else {
             str = "You Lost, word is: " + this.word.wordToGuess;
-            audioLoser.play();
+            this.audioLoser.play();
         }
         // Display Message - always show correct answer so they know
         document.getElementById("correctAnswer").innerHTML = this.word.wordToGuess;

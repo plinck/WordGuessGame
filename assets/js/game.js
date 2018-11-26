@@ -10,10 +10,6 @@
  * would create 1..n "word" objects for each time they tried.
  ********************************************************************************** */
 
-// Note, add these to the class later
-var audioStart = new Audio("./assets/sounds/Pacman_Introduction_Music-KP.mp3"); // Audio to start the game
-var audioWinner = new Audio("./assets/sounds/Strong_Punch-Mike_Koenig.mp3"); // Audio if you got it correct
-var audioLoser = new Audio("./assets/sounds/Buzzer-SoundBible.com.mp3"); // Audio if you got it wrong
 
 // Create WordGuessGame game object to run the overall game
 var wordGuessGame = new WordGuessGame(5);
@@ -39,9 +35,7 @@ document.addEventListener('keyup', function (event) {
         // wait for spacebar
         if (event.keyCode == 32) {
             wordGuessGame.reset(5); // reset all word stuff and start the game
-            audioStart.play();
         }
     } // else 
-
 });
 
