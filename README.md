@@ -33,3 +33,9 @@ I added a portfolio item to both my responsive and bootstrap portfolio.  Both of
 * [Bootstrap Portfolio](https://plinck.github.io/Bootstrap-Portfolio/portfolio.html)
 
 - - -
+
+### Bugs and known issues
+
+* Refactor the code and objects.  I still need to refactor the main classes.  Right now, WordGuessGame class supports all the functionality of the game and the game.js main program runs it and interacts with the html.  I plan to refactor it to push the dynamic HTML into the WordGuessGame class and move the word guess logic for one specific guess into a class/object called word or wordGuess.  This makes most sense - word should encapuslate all the behavior of one single word guess and WordGuessGame should use that be the controller for the overall game with multiple guess.
+
+- - -
