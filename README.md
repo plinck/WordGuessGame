@@ -1,4 +1,4 @@
-# JavaScript Assignment
+# Band Name Guessing Game (New Wave 80's )
 
 ### Overview
 
