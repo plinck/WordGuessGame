@@ -15,9 +15,8 @@ var audioStart = new Audio("./assets/sounds/Pacman_Introduction_Music-KP.mp3"); 
 var audioWinner = new Audio("./assets/sounds/Strong_Punch-Mike_Koenig.mp3"); // Audio if you got it correct
 var audioLoser = new Audio("./assets/sounds/Buzzer-SoundBible.com.mp3"); // Audio if you got it wrong
 
-// Create WordGuessGame game object to run the game
+// Create WordGuessGame game object to run the overall game
 var wordGuessGame = new WordGuessGame(5);
-// displayGameStatus();
 
 // Get the keyboard input - whenever a key is press
 // I use *spacebar* to strat the game so the user does not accidentally start it
@@ -33,16 +32,6 @@ document.addEventListener('keyup', function (event) {
         // Only accept keycodes for 'a' (65) through 'z' (90) and '0' (48) through '9' (57)
         if (((event.keyCode >= 65) && (event.keyCode <= 90)) || ((event.keyCode >= 48) && (event.keyCode <= 57))) {
             wordGuessGame.makeAGuess(charValue);
-            displayGameStatus();
-
-            // if you are done and got it right, end the game successfully
-            // if you dont have it right and have no more guesses, end game unsuccessfully
-            // Otherwise just give them another guess
-            if (wordGuessGame.guessedCorrectly) {
-                endGame(true);
-            } else if (wordGuessGame.incorrectGuessesLeft < 1) {
-                endGame(false);
-            }
         } // if keycodes 'a' - 'z'
 
     } // if game in progress
@@ -50,41 +39,9 @@ document.addEventListener('keyup', function (event) {
         // wait for spacebar
         if (event.keyCode == 32) {
             wordGuessGame.reset(5); // reset all word stuff and start the game
-            displayGameStatus();
             audioStart.play();
         }
     } // else 
 
 });
 
-// End the current game
-function endGame(winner) {
-    // Winner or loser messages and audio
-    if (winner) {
-        str = "You WON! Word is: " + wordGuessGame.wordToGuess ;
-        document.getElementById("correctAnswer").innerHTML = wordGuessGame.wordToGuess;    
-        document.getElementById("albumCover").src = wordGuessGame.wordImage;
-        audioWinner.play();
-    } else {
-        str = "You Lost, word is: " + wordGuessGame.wordToGuess;
-        document.getElementById("correctAnswer").innerHTML = "80s Album Cover";    
-        audioLoser.play();
-    }
-    // Display Message
-    document.getElementById("gameMessage").innerHTML = str;
-}
-
-function displayGameStatus() {
-    document.getElementById("currentGuess").innerHTML = wordGuessGame.currentGuess;
-    document.getElementById("incorrectGuessesLeft").innerHTML = wordGuessGame.incorrectGuessesLeft;
-    document.getElementById("lettersGuessed").innerHTML = wordGuessGame.lettersGuessed;
-    document.getElementById("lettersCorrectlyGuessed").innerHTML = wordGuessGame.lettersCorrectlyGuessed;
-    document.getElementById("lettersIncorrectlyGuessed").innerHTML = wordGuessGame.lettersIncorrectlyGuessed;
-    if (wordGuessGame.gameInProgress) {
-        document.getElementById("gameMessage").innerHTML = "playing ...";
-        document.getElementById("mainTitle").innerHTML = "Press letter or number key to guess band name";
-    } else {
-        document.getElementById("mainTitle").innerHTML = "Press spacebar to start";
-    }
-    document.getElementById("nbrWins").innerHTML = wordGuessGame.nbrWins;
-}

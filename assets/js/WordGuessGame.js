@@ -1,3 +1,95 @@
+/*
+ * Class: Word
+ */
+class Word {
+    constructor(word, image, guesses = 5) {
+        this.wordToGuess = word;
+        this.wordImage = image;
+        this.currentGuess = "";
+        this.lettersGuessed = "";
+        this.incorrectGuessesLeft = guesses;
+        this.lettersCorrectlyGuessed = "";
+        this.nbrLettersGuessedCorrect = 0;
+        this.lettersIncorrectlyGuessed = "";
+        this.nbrLettersGuessedIncorrect = 0;
+        this.guessedCorrectly = false;
+
+        this.makeBlankGuess(this.wordToGuess);
+    }
+
+    // Make the blank layout of the word
+    makeBlankGuess(word) {
+        var text = "";
+        for (var member in word) {
+            // text += "list[member]";
+            text += "_";
+        }
+        this.currentGuess = text;
+    }
+
+    // put the letter in the correct spot
+    updateCurrentGuess(indicesFound, replacement) {
+        var newGuess = this.currentGuess;
+        var currGuess = this.currentGuess;
+
+        // Get all the matches in case same letter multiple times
+        for (var i = 0; i < indicesFound.length; i++) {
+            newGuess =
+                currGuess.substr(0, indicesFound[i]) +
+                replacement +
+                currGuess.substr(indicesFound[i] + replacement.length);
+            currGuess = newGuess;
+        }
+
+        this.currentGuess = newGuess;
+        console.log("newGuess:'" + newGuess + "'");
+
+        if (this.currentGuess == this.wordToGuess.toLowerCase()) {
+            this.guessedCorrectly = true;
+        }
+    }
+
+    makeAGuess(letter) {
+        var lowerLetter = letter.toLowerCase();
+        var lowerWord = this.wordToGuess.toLowerCase();
+
+        // var n = lowerWord.search(lowerLetter);
+
+        var indicesFound = [];
+        var nbrFound = 0;
+        for (var i = 0; i < lowerWord.length; i++) {
+            if (lowerWord[i] == lowerLetter) {
+                nbrFound += 1;
+                indicesFound.push(i);
+            }
+        }
+
+        // Add to the letters guessed string if they didnt aleady guess it
+        // If they already guessed this letter, give them a pass and another try
+        // If they guess correctly, do NOT count that against them
+        if (this.lettersGuessed.search(lowerLetter) < 0) {
+            this.lettersGuessed += lowerLetter;
+
+            if (nbrFound > 0) {
+                // add to letters correctly guessed
+                this.lettersCorrectlyGuessed += lowerLetter;
+                this.nbrLettersGuessedCorrect += 1;
+
+                this.updateCurrentGuess(indicesFound, lowerLetter);
+            } else {
+                // Take away one of the guesses and add to letters Incorrectly guessed 
+                this.incorrectGuessesLeft -= 1;
+                this.lettersIncorrectlyGuessed += lowerLetter;
+                this.nbrLettersGuessedIncorrect += 1;
+            }
+
+        } else {
+            console.log("Already guessed the letter: " + lowerLetter);
+        }
+    }
+
+}
+
 /* **********************************************************************************
  * Class: WordGuessGame
  * Contains all the functionality to do a hangman-type game
@@ -78,96 +170,62 @@ class WordGuessGame {
         // get a random word from the database/array of words
         this.nextWordIndex = Math.floor(Math.random() * this.wordArray.length);
 
-        this.wordToGuess = this.wordArray[this.nextWordIndex];
-        this.wordImage = this.imageArray[this.nextWordIndex];
-        this.currentGuess = "";
-        this.lettersGuessed = "";
-        this.incorrectGuessesLeft = guesses;
-        this.lettersCorrectlyGuessed = "";
-        this.nbrLettersGuessedCorrect = 0;
-        this.lettersIncorrectlyGuessed = "";
-        this.nbrLettersGuessedIncorrect = 0;
-        this.guessedCorrectly = false;
+        this.word = new Word(this.wordArray[this.nextWordIndex], this.imageArray[this.nextWordIndex], guesses);
 
-        this.makeBlankGuess(this.wordToGuess);
-    }
+        this.displayGameStatus();
 
-    // Make the blank layout of the word
-    makeBlankGuess(word) {
-        var text = "";
-        for (var member in word) {
-            // text += "list[member]";
-            text += "_";
-        }
-        this.currentGuess = text;
-    }
-
-    // put the letter in the correct spot
-    updateCurrentGuess(indicesFound, replacement) {
-        var newGuess = this.currentGuess;
-        var currGuess = this.currentGuess;
-
-        // Get all the matches in case same letter multiple times
-        for (var i = 0; i < indicesFound.length; i++) {
-            newGuess =
-                currGuess.substr(0, indicesFound[i]) +
-                replacement +
-                currGuess.substr(indicesFound[i] + replacement.length);
-            currGuess = newGuess;
-        }
-
-        this.currentGuess = newGuess;
-        console.log("newGuess:'" + newGuess + "'");
-
-        if (this.currentGuess == this.wordToGuess.toLowerCase()) {
-            this.guessedCorrectly = true;
-            this.nbrWins += 1; // Add one to number of games won
-            this.gameInProgress = false; // end game, win
-        }
     }
 
     makeAGuess(letter) {
-        var lowerLetter = letter.toLowerCase();
-        var lowerWord = this.wordToGuess.toLowerCase();
+        this.word.makeAGuess(letter);
+        this.displayGameStatus();
 
-        // var n = lowerWord.search(lowerLetter);
-
-        var indicesFound = [];
-        var nbrFound = 0;
-        for (var i = 0; i < lowerWord.length; i++) {
-            if (lowerWord[i] == lowerLetter) {
-                nbrFound += 1;
-                indicesFound.push(i);
-            }
+        // if you are done and got it right, end the game successfully
+        // if you dont have it right and have no more guesses, end game unsuccessfully
+        // Otherwise just give them another guess
+        if (this.word.guessedCorrectly) {
+            this.nbrWins += 1; // Add one to number of games won
+            this.endGame(true);
+        } else if (this.word.incorrectGuessesLeft < 1) {
+            this.endGame(false);
         }
+    }
 
-        // Add to the letters guessed string if they didnt aleady guess it
-        // If they already guessed this letter, give them a pass and another try
-        // If they guess correctly, do NOT count that against them
-        if (this.lettersGuessed.search(lowerLetter) < 0) {
-            this.lettersGuessed += lowerLetter;
-
-            if (nbrFound > 0) {
-                // add to letters correctly guessed
-                this.lettersCorrectlyGuessed += lowerLetter;
-                this.nbrLettersGuessedCorrect += 1;
-
-                this.updateCurrentGuess(indicesFound, lowerLetter);
-            } else {
-                // Take away one of the guesses and add to letters Incorrectly guessed 
-                this.incorrectGuessesLeft -= 1;
-                this.lettersIncorrectlyGuessed += lowerLetter;
-                this.nbrLettersGuessedIncorrect += 1;
-            }
-
-            // end the game if no more guesses
-            if (this.incorrectGuessesLeft < 1) {
-                this.gameInProgress = false; // end game, loss
-            }
-
+    // format html to display game
+    displayGameStatus() {
+        document.getElementById("currentGuess").innerHTML = this.word.currentGuess;
+        document.getElementById("incorrectGuessesLeft").innerHTML = this.word.incorrectGuessesLeft;
+        document.getElementById("lettersGuessed").innerHTML = this.word.lettersGuessed;
+        document.getElementById("lettersCorrectlyGuessed").innerHTML = this.word.lettersCorrectlyGuessed;
+        document.getElementById("lettersIncorrectlyGuessed").innerHTML = this.word.lettersIncorrectlyGuessed;
+        if (wordGuessGame.gameInProgress) {
+            document.getElementById("gameMessage").innerHTML = "playing ...";
+            document.getElementById("mainTitle").innerHTML = "Press letter or number key to guess band name";
         } else {
-            console.log("Already guessed the letter: " + lowerLetter);
+            document.getElementById("mainTitle").innerHTML = "Press spacebar to start";
         }
+        document.getElementById("nbrWins").innerHTML = wordGuessGame.nbrWins;
+    }
+
+    // End the current game
+    endGame(winner) {
+        var str;
+
+        this.gameInProgress = false;
+        this.displayGameStatus();
+
+        // Winner or loser messages and audio
+        if (winner) {
+            str = "You WON! Word is: " + this.word.wordToGuess;
+            audioWinner.play();
+        } else {
+            str = "You Lost, word is: " + this.word.wordToGuess;
+            audioLoser.play();
+        }
+        // Display Message - always show correct answer so they know
+        document.getElementById("correctAnswer").innerHTML = this.word.wordToGuess;
+        document.getElementById("albumCover").src = this.word.wordImage;
+        document.getElementById("gameMessage").innerHTML = str;
     }
 
     // Print self/this
@@ -180,16 +238,16 @@ class WordGuessGame {
 
         // "word" properties - i.e. properties for one word guess - refactor to object
         document.write("gameInProgress:'" + this.gameInProgress + "'" + "<br>");
-        document.write("wordToGuess:'" + this.wordToGuess + "'" + "<br>");
-        document.write("wordImage:'" + this.wordImage + "'" + "<br>");
-        document.write("currentGuess:'" + this.currentGuess + "'" + "<br>");
-        document.write("lettersGuessed:'" + this.lettersGuessed + "'" + "<br>");
-        document.write("incorrectGuessesLeft:" + this.incorrectGuessesLeft + "<br>");
-        document.write("lettersCorrectlyGuessed:'" + this.lettersCorrectlyGuessed + "'" + "<br>");
-        document.write("nbrLettersGuessedCorrect:" + this.nbrLettersGuessedCorrect + "<br>");
-        document.write("lettersIncorrectlyGuessed:'" + this.lettersIncorrectlyGuessed + "'" + "<br>");
-        document.write("nbrLettersGuessedIncorrect:" + this.nbrLettersGuessedIncorrect + "<br>");
-        document.write("guessedCorrectly:" + this.guessedCorrectly + "<br>");
+        document.write("wordToGuess:'" + this.word.wordToGuess + "'" + "<br>");
+        document.write("wordImage:'" + this.word.wordImage + "'" + "<br>");
+        document.write("currentGuess:'" + this.word.currentGuess + "'" + "<br>");
+        document.write("lettersGuessed:'" + this.word.lettersGuessed + "'" + "<br>");
+        document.write("incorrectGuessesLeft:" + this.word.ncorrectGuessesLeft + "<br>");
+        document.write("lettersCorrectlyGuessed:'" + this.word.lettersCorrectlyGuessed + "'" + "<br>");
+        document.write("nbrLettersGuessedCorrect:" + this.word.nbrLettersGuessedCorrect + "<br>");
+        document.write("lettersIncorrectlyGuessed:'" + this.word.lettersIncorrectlyGuessed + "'" + "<br>");
+        document.write("nbrLettersGuessedIncorrect:" + this.word.nbrLettersGuessedIncorrect + "<br>");
+        document.write("guessedCorrectly:" + this.word.guessedCorrectly + "<br>");
     }
 
     // Log self/this
@@ -202,15 +260,15 @@ class WordGuessGame {
 
         // "word" properties - i.e. properties for one word guess - refactor to object
         console.log("gameInProgress:'" + this.gameInProgress + "'");
-        console.log("wordToGuess:'" + this.wordToGuess + "'");
-        console.log("wordImage:'" + this.wordImage + "'");
-        console.log("currentGuess:'" + this.currentGuess + "'");
-        console.log("lettersGuessed:'" + this.lettersGuessed + "'");
-        console.log("incorrectGuessesLeft:" + this.incorrectGuessesLeft);
-        console.log("lettersCorrectlyGuessed:'" + this.lettersCorrectlyGuessed + "'");
-        console.log("nbrLettersGuessedCorrect:" + this.nbrLettersGuessedCorrect);
-        console.log("lettersIncorrectlyGuessed:'" + this.lettersIncorrectlyGuessed + "'");
-        console.log("nbrLettersGuessedIncorrect:" + this.nbrLettersGuessedIncorrect);
-        console.log("guessedCorrectly:'" + this.guessedCorrectly + "'");
+        console.log("wordToGuess:'" + this.word.wordToGuess + "'");
+        console.log("wordImage:'" + this.word.wordImage + "'");
+        console.log("currentGuess:'" + this.word.currentGuess + "'");
+        console.log("lettersGuessed:'" + this.word.lettersGuessed + "'");
+        console.log("incorrectGuessesLeft:" + this.word.incorrectGuessesLeft);
+        console.log("lettersCorrectlyGuessed:'" + this.word.lettersCorrectlyGuessed + "'");
+        console.log("nbrLettersGuessedCorrect:" + this.word.nbrLettersGuessedCorrect);
+        console.log("lettersIncorrectlyGuessed:'" + this.word.lettersIncorrectlyGuessed + "'");
+        console.log("nbrLettersGuessedIncorrect:" + this.word.nbrLettersGuessedIncorrect);
+        console.log("guessedCorrectly:'" + this.word.guessedCorrectly + "'");
     }
 }
