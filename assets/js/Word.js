@@ -45,34 +45,33 @@ class Word {
         }
 
         this.currentGuess = newGuess;
-        console.log("newGuess:'" + newGuess + "'");
 
         if (this.currentGuess == this.wordToGuess.toLowerCase()) {
             this.guessedCorrectly = true;
         }
     }
 
+    // Guess one letter and find all the places it appears in the word
     makeAGuess(letter) {
         var lowerLetter = letter.toLowerCase();
         var lowerWord = this.wordToGuess.toLowerCase();
 
-        // var n = lowerWord.search(lowerLetter);
-
-        var indicesFound = [];
-        var nbrFound = 0;
-        for (var i = 0; i < lowerWord.length; i++) {
-            if (lowerWord[i] == lowerLetter) {
-                nbrFound += 1;
-                indicesFound.push(i);
-            }
-        }
-
-        // Add to the letters guessed string if they didnt aleady guess it
         // If they already guessed this letter, give them a pass and another try
         // If they guess correctly, do NOT count that against them
         if (this.lettersGuessed.search(lowerLetter) < 0) {
             this.lettersGuessed += lowerLetter;
 
+            // Find all occurrences of letter in word to guess
+            var indicesFound = []; // index of where the letter is found
+            var nbrFound = 0;
+            for (var i = 0; i < lowerWord.length; i++) {
+                if (lowerWord[i] == lowerLetter) {
+                    nbrFound += 1;
+                    indicesFound.push(i);
+                }
+            }
+
+            // Add to the letters guessed string if they didnt aleady guess it
             if (nbrFound > 0) {
                 // add to letters correctly guessed
                 this.lettersCorrectlyGuessed += lowerLetter;
