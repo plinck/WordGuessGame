@@ -46,7 +46,7 @@ I added a portfolio item to both my responsive and bootstrap portfolio.  Both of
 
 * Refactored to multiple classes 11/26
 * Add JSON object for holding Name, Image and Audio for a band namne
-    * Allow use to modifiy JSON file to change the same
-    * Allow to pick from different JSON files for different themes
+  * Allow use to modifiy JSON file to change the same
+  * Allow to pick from different JSON files for different themes
 
 - - -
